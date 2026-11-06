@@ -1,0 +1,9 @@
+Package: com.rom4ik.origindroplet
+Name: OriginDroplet
+Version: 0.1.0
+Architecture: iphoneos-arm
+Description: OriginOS 7-style live droplet on your wallpaper. Shake the phone or tap the home screen — the droplet slides, bounces and settles in a new spot.
+Depends: mobilesubstrate
+Maintainer: rom4ikg2000-lab
+Author: rom4ikg2000-lab
+Section: Tweaks

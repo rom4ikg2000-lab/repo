@@ -1,0 +1,46 @@
+name: Build & publish repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "OriginDroplet/**"
+      - "WiggleTheme/**"
+      - "build-all.sh"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq build-essential fakeroot rsync perl unzip ncurses-term dpkg-dev bzip2 curl git
+          git clone --recursive --depth 1 https://github.com/theos/theos.git "$HOME/theos"
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/theos/sdks.git "$HOME/sdks-tmp"
+          cd "$HOME/sdks-tmp" && git sparse-checkout set iPhoneOS16.5.sdk
+          mkdir -p "$HOME/theos/sdks"
+          mv "$HOME/sdks-tmp/iPhoneOS16.5.sdk" "$HOME/theos/sdks/"
+          cd "$HOME" && rm -rf "$HOME/sdks-tmp"
+          mkdir -p "$HOME/theos/toolchain"
+          curl -sL https://github.com/L1ghtmann/llvm-project/releases/latest/download/iOSToolchain-x86_64.tar.xz | tar -xJf - -C "$HOME/theos/toolchain/"
+          curl -sL -o "$HOME/theos/bin/ldid" https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_linux_x86_64
+          chmod +x "$HOME/theos/bin/ldid"
+
+      - name: Build rootless + rootful, regenerate apt repo
+        run: bash build-all.sh
+
+      - name: Commit fresh packages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add debs dists
+          git diff --cached --quiet || git commit -m "ci: rebuild packages"
+          git push

@@ -1,0 +1,33 @@
+Origin: rom4ikg2000-lab
+Label: rom4ikg2000-lab Tweaks
+Suite: stable
+Codename: stable
+Version: 1.0
+Architectures: iphoneos-arm iphoneos-arm64
+Components: main
+Description: Personal tweak repository (rootless + rootful)
+Date: Sat, 07 Nov 2026 00:28:53 +0300
+
+MD5Sum:
+ 4f3995ad12b4aa19ce9b50ee606afd2b 2434 dists/stable/main/binary-iphoneos-arm/Packages
+ 50d6b227230fbae00fa91269847d2b8a 997 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 3c64ae9c0daac2df8a56ec6237f2f340 869 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ 4f3995ad12b4aa19ce9b50ee606afd2b 2434 dists/stable/main/binary-iphoneos-arm64/Packages
+ 50d6b227230fbae00fa91269847d2b8a 997 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 3c64ae9c0daac2df8a56ec6237f2f340 869 dists/stable/main/binary-iphoneos-arm64/Packages.gz
+
+SHA1:
+ a4743cee2a5776ae694966120b512322fb93842b 2434 dists/stable/main/binary-iphoneos-arm/Packages
+ 3ba879cd401579722b91d1142c285bc76ea0100c 997 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 8c145bb97162506d228855f788a74cf6e1c20fcf 869 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ a4743cee2a5776ae694966120b512322fb93842b 2434 dists/stable/main/binary-iphoneos-arm64/Packages
+ 3ba879cd401579722b91d1142c285bc76ea0100c 997 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 8c145bb97162506d228855f788a74cf6e1c20fcf 869 dists/stable/main/binary-iphoneos-arm64/Packages.gz
+
+SHA256:
+ 1ef77bfea1f7f299c5493091a7c2c910864bb66c16daab7461159aa2cd573e1d 2434 dists/stable/main/binary-iphoneos-arm/Packages
+ 8d04188c7008494c73affa0cba992c29728f3544812e8bdc82cb2ffca67a6e6a 997 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 9c550961525a854113a80cb5b8d50f15dfc364df20d45e8f18f3791a6c563695 869 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ 1ef77bfea1f7f299c5493091a7c2c910864bb66c16daab7461159aa2cd573e1d 2434 dists/stable/main/binary-iphoneos-arm64/Packages
+ 8d04188c7008494c73affa0cba992c29728f3544812e8bdc82cb2ffca67a6e6a 997 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 9c550961525a854113a80cb5b8d50f15dfc364df20d45e8f18f3791a6c563695 869 dists/stable/main/binary-iphoneos-arm64/Packages.gz
