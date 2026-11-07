@@ -184,7 +184,6 @@ static NSString *WGPaintedMaskPath(void) {
     id<CAMetalDrawable> drawable = [l nextDrawable];
     if (!drawable) return;
 
-    memcpy(self.uniformsBuffer.contents, u, sizeof(WGUniforms));
 
     MTLRenderPassDescriptor *rp = [MTLRenderPassDescriptor renderPassDescriptor];
     rp.colorAttachments[0].texture = drawable.texture;
@@ -194,7 +193,7 @@ static NSString *WGPaintedMaskPath(void) {
     id<MTLCommandBuffer> cb = [self.queue commandBuffer];
     id<MTLRenderCommandEncoder> enc = [cb renderCommandEncoderWithDescriptor:rp];
     [enc setRenderPipelineState:self.pipeline];
-    [enc setFragmentBuffer:self.uniformsBuffer offset:0 atIndex:0];
+    [enc setFragmentBytes:u length:sizeof(WGUniforms) atIndex:0];
     [enc setFragmentTexture:self.wallTexture atIndex:0];
     if (self.maskTexture) [enc setFragmentTexture:self.maskTexture atIndex:1];
     [enc drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
@@ -300,6 +299,7 @@ static void *kWGContentsCtx = &kWGContentsCtx;
 - (void)installInView:(UIView *)wallpaper {
     [self refreshPrefsIfNeeded];
     if (!self.pEnabled) {
+        self.wallpaperView = wallpaper;
         [self disableOverlay];
         return;
     }
@@ -327,7 +327,7 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     [self addContentsObserver];
 
     self.needsSnapshot = YES;
-    [self applyLockState];
+    [self refreshLockState];
     WGLog(@"installed over %@", NSStringFromClass(wallpaper.class));
 }
 
@@ -612,6 +612,24 @@ static BOOL WGIsLockScreenWallpaper(UIView *v) {
 }
 %end
 
+static void WGPreferencesChanged(CFNotificationCenterRef center, void *observer,
+                                 CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        WGEngine *engine = [WGEngine shared];
+        engine.prefsStamp = 0;
+        [engine refreshPrefsIfNeeded];
+        if (!engine.pEnabled) {
+            [engine disableOverlay];
+            return;
+        }
+        UIView *wallpaper = engine.wallpaperView;
+        if (wallpaper) [engine installInView:wallpaper];
+        engine.needsSnapshot = YES;
+        engine.oneFrame = YES;
+        [engine refreshLockState];
+    });
+}
+
 static void WGLockStateChanged(CFNotificationCenterRef center, void *observer,
                                CFStringRef name, const void *object,
                                CFDictionaryRef userInfo) {
@@ -622,6 +640,7 @@ static void WGLockStateChanged(CFNotificationCenterRef center, void *observer,
 
 %ctor {
     @autoreleasepool {
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, WGPreferencesChanged, CFSTR("com.wiggletheme.preferenceschanged"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
                                         NULL, WGLockStateChanged,
                                         CFSTR("com.apple.springboard.lockstate"),

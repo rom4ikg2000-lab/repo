@@ -98,7 +98,9 @@ static NSString *WGEditorMaskPath(void) {
 - (void)loadMask:(UIImage *)img {
     [self ensureContext];
     CGContextClearRect(_ctx, CGRectMake(0, 0, kWGPaintW, kWGPaintH));
-    [img drawInRect:CGRectMake(0, 0, kWGPaintW, kWGPaintH)]; // UIImage сам разрулит ориентацию
+    UIGraphicsPushContext(_ctx);
+    [img drawInRect:CGRectMake(0, 0, kWGPaintW, kWGPaintH)];
+    UIGraphicsPopContext();
     CGImageRef out = CGBitmapContextCreateImage(_ctx);
     _paint = [UIImage imageWithCGImage:out];
     CFRelease(out);
@@ -246,13 +248,19 @@ static NSString *WGEditorMaskPath(void) {
 - (void)saveTapped {
     UIImage *mask = [self.canvas exportMask];
     NSData *png = UIImagePNGRepresentation(mask);
-    [png writeToFile:WGEditorMaskPath() atomically:YES];
+    if (![png writeToFile:WGEditorMaskPath() atomically:YES]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Не удалось сохранить маску" message:@"Попробуй ещё раз." preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"ОК" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
 
     // включаем использование нарисованной маски — твик подхватит файл
     CFPreferencesSetValue(CFSTR("PaintedMaskEnabled"), kCFBooleanTrue,
                           CFSTR("com.wiggletheme.defaults"),
                           kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
     CFPreferencesAppSynchronize(CFSTR("com.wiggletheme.defaults"));
+    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.wiggletheme.preferenceschanged"), NULL, NULL, true);
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{

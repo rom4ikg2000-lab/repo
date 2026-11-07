@@ -171,11 +171,11 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSLinkCell</string>
+			<string>PSButtonCell</string>
 			<key>label</key>
 			<string>Нарисовать маску кистью</string>
-			<key>detail</key>
-			<string>WGMaskEditorController</string>
+			<key>action</key>
+			<string>openMaskEditor</string>
 		</dict>
 		<dict>
 			<key>cell</key>
