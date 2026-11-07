@@ -51,9 +51,9 @@ hash_section() { # $1 = MD5Sum | SHA1 | SHA256, остальные — файл�
     SHA256) cmd=sha256sum ;;
   esac
   for f in "$@"; do
-    rel="${f#./}"
-    h=$("$cmd" "$rel" | cut -d' ' -f1)
-    size=$(stat -c%s "$rel")
+    rel="${f#dists/stable/}"
+    h=$("$cmd" "$f" | cut -d' ' -f1)
+    size=$(stat -c%s "$f")
     echo " $h $size $rel"
   done
 }
@@ -76,6 +76,22 @@ PKGS=$(find dists -name 'Packages*' | sort)
   echo
   hash_section SHA256  $PKGS
 } > dists/stable/Release
+
+# Flat repository metadata for package managers using the repository URL directly.
+cp dists/stable/main/binary-iphoneos-arm64/Packages ./Packages
+cp dists/stable/main/binary-iphoneos-arm64/Packages.gz ./Packages.gz
+cp dists/stable/main/binary-iphoneos-arm64/Packages.bz2 ./Packages.bz2
+{
+  sed '/^MD5Sum:/,$d' dists/stable/Release
+  for algo in MD5Sum SHA1 SHA256; do
+    echo "$algo:"
+    case "$algo" in MD5Sum) cmd=md5sum ;; SHA1) cmd=sha1sum ;; SHA256) cmd=sha256sum ;; esac
+    for f in Packages Packages.gz Packages.bz2; do
+      echo " $("$cmd" "$f" | cut -d' ' -f1) $(stat -c%s "$f") $f"
+    done
+    echo
+  done
+} > Release
 
 echo ">>> Готово. Пакеты:"
 ls -la "$DEBS"

@@ -1,0 +1,160 @@
+Package: com.rom4ik.wiggletheme
+Version: 0.1.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 136
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.1.0_iphoneos-arm64.deb
+Size: 18638
+MD5sum: 099f066861f0c37025cef18b56e2dd88
+SHA1: ce65d64e49b536992e37673f12951596dd88214d
+SHA256: a295fe43de8bedf33f6ac07d2f982ea48d64053449e86f91831f527cb3a89731
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.1.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 136
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.1.0_iphoneos-arm.deb
+Size: 18564
+MD5sum: e9ebddbb0f00eaf010101c7297529ba5
+SHA1: d7a1b01099fed3c53fb68504b3b705f20d119696
+SHA256: bed3cc62bf5cca7aaad698c4e88795a5e415519377c577640a7602efe44efffb
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.1.1
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 136
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.1.1_iphoneos-arm.deb
+Size: 18582
+MD5sum: 34f11d83cf63e370facf4c484cd72582
+SHA1: 813a10fe5c80901a0a5fe6ec750868428977a623
+SHA256: 1cdca3eb6be8db928e6c73e49701ba9311e05579ea4e64e7bdb09b6c0b57f4b1
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.1.1
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 136
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.1.1_iphoneos-arm64.deb
+Size: 18696
+MD5sum: ea6246561b353a9c6ef271ce849f060c
+SHA1: 5f15b2a1f057b5ab43edb7b66d7694cc0d15f674
+SHA256: 343ffe7919c0831a1c13b9f76231e1652194c2916c23ec9e8f5676ba67e52457
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.2.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 216
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.2.0_iphoneos-arm.deb
+Size: 19808
+MD5sum: a6969bae5b03138825bac2324614ef80
+SHA1: 447f907535b433b2463444a8e904ac7ee39c5d97
+SHA256: f0d26d18d74043b4a0e023892387a4241e65b78040b311c23f00db129c4f81ac
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.2.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 216
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.2.0_iphoneos-arm64.deb
+Size: 19854
+MD5sum: 5c254d1abedf99e1a0beb1f766d58ebc
+SHA1: 9560c134a3445c8a9f06344c878cc3385da8570e
+SHA256: e86b1fe231b882fd929970557b0d9d581c1b5c4eca385ac7bb3630e82c4ba4d3
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.3.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 224
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.3.0_iphoneos-arm.deb
+Size: 21188
+MD5sum: 2b98762cfa4b5fe94e3e65e85b7011ea
+SHA1: 8ea7f0038205840cff3d60b34a5bda99eb19dcf6
+SHA256: e9ed1de095b571a3b4ad36c921e0809a908c4b853cacb5ac19309b5a24adcca3
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.3.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 224
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.3.0_iphoneos-arm64.deb
+Size: 21284
+MD5sum: c546c52bc53ed9c0074e4fb224778b85
+SHA1: 05ada6f2dc971c7ecd6530f94ff2ca30dd4442f3
+SHA256: 98ed8f467beb6fe3f72c2c8a102128dd744b24c7998df9254bc728f885699dc6
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.4.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 228
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.4.0_iphoneos-arm64.deb
+Size: 27042
+MD5sum: 25decaedf67a02db70ff725ab7e77523
+SHA1: 2087789c067c73efbc97be4508e0dfc8c728074b
+SHA256: f66082dc07fe1b4ef6e17a3897b314e111a68e4dab35e3b2e3d2d62fa10eead9
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.4.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 228
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.4.0_iphoneos-arm.deb
+Size: 26998
+MD5sum: 609ee12af1c9a790c0be5d746188e396
+SHA1: c1d60a14a2151a222ce6333bec76d2e3b36d7f43
+SHA256: 6f10bf42a8cd1dc6dc363c1c97836ee0ab1446325fc45ad0a2c1dc58828e096e
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
