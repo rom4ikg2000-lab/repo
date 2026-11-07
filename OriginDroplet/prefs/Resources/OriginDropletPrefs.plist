@@ -10,7 +10,9 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Капля на обоях (стиль OriginOS 7)</string>
+			<string>OriginDroplet — капля на обоях (стиль OriginOS 7)</string>
+			<key>footerText</key>
+			<string>Тряска — капля скользит по наклону и прыгает. Тап по пустому месту — реагирует. Настройки применяются на лету.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -24,11 +26,12 @@
 			<key>default</key>
 			<true/>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Как капля двигается</string>
+			<string>Движение</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -50,10 +53,172 @@
 			<key>key</key>
 			<string>TapEnabled</string>
 			<key>label</key>
-			<string>Двигать по тапу (пустое место)</string>
+			<string>Реагировать на тап</string>
 			<key>default</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>TapAction</string>
+			<key>title</key>
+			<string>Действие по тапу</string>
+			<key>values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>titles</key>
+			<array>
+				<string>Уехать к точке тапа</string>
+				<string>Отпрыгнуть от точки тапа</string>
+			</array>
+			<key>default</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>IdleDrift</string>
+			<key>label</key>
+			<string>Дрейф от наклона</string>
+			<key>footerText</key>
+			<string>Наклони телефон и держи — капля медленно потечёт вниз по наклону, как настоящая вода.</string>
+			<key>default</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>DriftSpeed</string>
+			<key>label</key>
+			<string>Скорость дрейфа</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>default</key>
+			<real>0.5</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Зона работы капли</string>
+			<key>footerText</key>
+			<string>Капля живёт только внутри выбранной зоны: отскакивает от её границ и не реагирует на тапы снаружи. Отступы — это тонкая подгонка зоны от краёв экрана, они работают в любом режиме.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>ZoneMode</string>
+			<key>title</key>
+			<string>Зона</string>
+			<key>values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+			</array>
+			<key>titles</key>
+			<array>
+				<string>Весь экран</string>
+				<string>Верхняя половина</string>
+				<string>Нижняя половина</string>
+				<string>Центральная область</string>
+			</array>
+			<key>default</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>InsetTop</string>
+			<key>label</key>
+			<string>Отступ сверху, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>InsetBottom</string>
+			<key>label</key>
+			<string>Отступ снизу, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>InsetLeft</string>
+			<key>label</key>
+			<string>Отступ слева, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.origindroplet.defaults</string>
+			<key>key</key>
+			<string>InsetRight</string>
+			<key>label</key>
+			<string>Отступ справа, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -116,12 +281,6 @@
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Своя картинка вместо капли (полный путь к PNG, пусто = рисованная капля)</string>
-		</dict>
-		<dict>
-			<key>cell</key>
 			<string>PSEditTextCell</string>
 			<key>defaults</key>
 			<string>com.origindroplet.defaults</string>
@@ -129,12 +288,38 @@
 			<string>ImagePath</string>
 			<key>label</key>
 			<string>Путь к PNG</string>
+			<key>footerText</key>
+			<string>Своя картинка вместо рисованной капли (полный путь к PNG с прозрачностью; пусто = встроенная капля).</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Отладка (логи в Console)</string>
+			<string>Действия</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Поставить каплю в центр зоны</string>
+			<key>action</key>
+			<string>centerDroplet:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Респринг (перезапуск рабочего стола)</string>
+			<key>action</key>
+			<string>respring:</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Отладка</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -145,6 +330,8 @@
 			<string>Debug</string>
 			<key>label</key>
 			<string>Подробные логи</string>
+			<key>footerText</key>
+			<string>OriginDroplet 0.3.0 · rom4ikg2000-lab</string>
 			<key>default</key>
 			<false/>
 		</dict>
