@@ -13,9 +13,8 @@ https://rom4ikg2000-lab.github.io/repo/
 ## Твики
 
 - **WiggleTheme** — обои для экрана блокировки с эффектом желе и водной рябью. Реагируют на движение телефона. iOS 15–18, A12+.
-- **OriginDroplet** — капля на домашнем экране, которая двигается при тряске телефона и перемещается по нажатию на пустое место.
 
-Оба твика собраны для rootless (`iphoneos-arm64`) и rootful (`iphoneos-arm`).
+Твик собран для rootless (`iphoneos-arm64`) и rootful (`iphoneos-arm`).
 
 ## Сборка
 
@@ -25,6 +24,6 @@ https://rom4ikg2000-lab.github.io/repo/
 bash build-all.sh
 ```
 
-Скрипт собирает оба твика для rootless и rootful, сохраняет пакеты в `debs/` и обновляет метаданные в `dists/`.
+Скрипт собирает WiggleTheme для rootless и rootful, сохраняет пакеты в `debs/` и обновляет метаданные в `dists/`.
 
 GitHub Actions пересобирает пакеты при изменениях в исходниках твиков или `build-all.sh`. Репозиторий доступен через GitHub Pages.

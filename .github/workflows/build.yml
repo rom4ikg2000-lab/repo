@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - "OriginDroplet/**"
       - "WiggleTheme/**"
       - "build-all.sh"
       - ".github/workflows/**"

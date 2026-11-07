@@ -66,13 +66,13 @@ WiggleTheme/
 > Deployment target — 15.0 (совместим с iPhone X / iOS 15): в theos/sdks нет SDK 17, но 17-only API твик не использует и на iOS 17/18 работает нормально.
 
 ```bash
-# зависимости и Theos — как в ../OriginDroplet/README.md (если ещё не стоит)
+# Установите Theos и зависимости для сборки пакетов
 cd /mnt/c/Users/SKIBIDIST/Documents/rustra1n/repo/WiggleTheme
 make package FINALPACKAGE=1                                 # rootless (по умолчанию)
 make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootful    # rootful
 export THEOS_DEVICE_IP=<IP> THEOS_DEVICE_PORT=22
 make install   # или .deb через Filza → Respring
-# либо всё сразу (оба твика, обе схемы + apt-репо): bash ../build-all.sh
+# либо всё сразу (обе схемы + apt-репо): bash ../build-all.sh
 ```
 
 После респринга: заблокируй экран и встряхни телефон.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Сборка обоих твиков под rootless и rootful + генерация apt-репозитория
+# Сборка WiggleTheme под rootless и rootful + генерация apt-репозитория
 # для Sileo/Zebra (dists/stable/...).
 #
 # Запуск в WSL: bash build-all.sh   (Theos в ~/theos; export THEOS=... если иначе)
@@ -26,9 +26,7 @@ build() { # $1 = каталог, $2 = схема, $3 = архитектура
   cd "$ROOT"
 }
 
-build OriginDroplet rootless iphoneos-arm64
 # rootful — это ПУСТАЯ схема в Theos (модуль только у rootless), поэтому ""
-build OriginDroplet ""       iphoneos-arm
 build WiggleTheme    rootless iphoneos-arm64
 build WiggleTheme    ""       iphoneos-arm
 
