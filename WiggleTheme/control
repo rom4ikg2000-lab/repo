@@ -1,6 +1,6 @@
 Package: com.rom4ik.wiggletheme
 Name: WiggleTheme
-Version: 0.1.1
+Version: 0.2.0
 Architecture: iphoneos-arm
 Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
 Depends: mobilesubstrate

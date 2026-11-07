@@ -2,152 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>title</key>
-	<string>OriginDroplet</string>
-	<key>items</key>
-	<array>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Капля на обоях (стиль OriginOS 7)</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>Enabled</string>
-			<key>label</key>
-			<string>Включено</string>
-			<key>default</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Как капля двигается</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>ShakeEnabled</string>
-			<key>label</key>
-			<string>Двигать от тряски</string>
-			<key>default</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>TapEnabled</string>
-			<key>label</key>
-			<string>Двигать по тапу (пустое место)</string>
-			<key>default</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Вид и физика</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>Size</string>
-			<key>label</key>
-			<string>Размер капли</string>
-			<key>min</key>
-			<real>16</real>
-			<key>max</key>
-			<real>96</real>
-			<key>default</key>
-			<real>34</real>
-			<key>showValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>Sensitivity</string>
-			<key>label</key>
-			<string>Чувствительность к тряске</string>
-			<key>min</key>
-			<real>1.2</real>
-			<key>max</key>
-			<real>3.5</real>
-			<key>default</key>
-			<real>2</real>
-			<key>showValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>Bounciness</string>
-			<key>label</key>
-			<string>Прыгучесть</string>
-			<key>min</key>
-			<real>0</real>
-			<key>max</key>
-			<real>1</real>
-			<key>default</key>
-			<real>0.55</real>
-			<key>showValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Своя картинка вместо капли (полный путь к PNG, пусто = рисованная капля)</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSEditTextCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>ImagePath</string>
-			<key>label</key>
-			<string>Путь к PNG</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Отладка (логи в Console)</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>defaults</key>
-			<string>com.origindroplet.defaults</string>
-			<key>key</key>
-			<string>Debug</string>
-			<key>label</key>
-			<string>Подробные логи</string>
-			<key>default</key>
-			<false/>
-		</dict>
-	</array>
+	<key>entry</key>
+	<dict>
+		<key>bundle</key>
+		<string>OriginDropletPrefs</string>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>detail</key>
+		<string>OriginDropletPrefs.OriginDropletPrefsRootListController</string>
+		<key>isController</key>
+		<true/>
+		<key>label</key>
+		<string>OriginDroplet</string>
+	</dict>
 </dict>
 </plist>

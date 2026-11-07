@@ -30,6 +30,38 @@ Description: OriginOS 7-style live droplet on your wallpaper. Shake the phone or
 Author: rom4ikg2000-lab
 Name: OriginDroplet
 
+Package: com.rom4ik.origindroplet
+Version: 0.2.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 164
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.origindroplet_0.2.0_iphoneos-arm.deb
+Size: 14002
+MD5sum: 756013001282862cd74ce6616966c9da
+SHA1: 4bdc3a7ed71edc16b324cbecbc9ff130f55789f0
+SHA256: 8eef92c441f793ff6033cc489a55091d63e01e6c5d26c39ff7964464c02075b4
+Section: Tweaks
+Description: OriginOS 7-style live droplet on your wallpaper. Shake the phone or tap the home screen — the droplet slides, bounces and settles in a new spot.
+Author: rom4ikg2000-lab
+Name: OriginDroplet
+
+Package: com.rom4ik.origindroplet
+Version: 0.2.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 164
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.origindroplet_0.2.0_iphoneos-arm64.deb
+Size: 14108
+MD5sum: 0bb3acb05f8bc2e5da834255aea782ed
+SHA1: 503dc7e015ce78caa393b050c46f8c6c2140ca4b
+SHA256: 34dc04e2400655ab7d714215dcaab767063e107417a798524522ba65c2020c91
+Section: Tweaks
+Description: OriginOS 7-style live droplet on your wallpaper. Shake the phone or tap the home screen — the droplet slides, bounces and settles in a new spot.
+Author: rom4ikg2000-lab
+Name: OriginDroplet
+
 Package: com.rom4ik.wiggletheme
 Version: 0.1.0
 Architecture: iphoneos-arm64
@@ -89,6 +121,38 @@ Size: 18696
 MD5sum: ea6246561b353a9c6ef271ce849f060c
 SHA1: 5f15b2a1f057b5ab43edb7b66d7694cc0d15f674
 SHA256: 343ffe7919c0831a1c13b9f76231e1652194c2916c23ec9e8f5676ba67e52457
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.2.0
+Architecture: iphoneos-arm
+Maintainer: rom4ikg2000-lab
+Installed-Size: 172
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.2.0_iphoneos-arm.deb
+Size: 19932
+MD5sum: 6957177135c0ab9839ffec112d233a98
+SHA1: db3b60ecd01814b4a333352a8ade91926de58766
+SHA256: beb4213cf7a1a129ea90241ccb651a9375111085ac87ab85df733a740f41683d
+Section: Tweaks
+Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
+Author: rom4ikg2000-lab
+Name: WiggleTheme
+
+Package: com.rom4ik.wiggletheme
+Version: 0.2.0
+Architecture: iphoneos-arm64
+Maintainer: rom4ikg2000-lab
+Installed-Size: 172
+Depends: mobilesubstrate
+Filename: debs/com.rom4ik.wiggletheme_0.2.0_iphoneos-arm64.deb
+Size: 19992
+MD5sum: e6bfc9d025738e174890169a969b07d0
+SHA1: 31d86528d349f252083f255b7f8789d6d1db0f99
+SHA256: 8f4521c7c332ff2be75cd17d35d85bf217c11441443ab01fc4524fef95a88264
 Section: Tweaks
 Description: OriginOS 7-style "Wiggle" wallpaper for the lock screen. Jelly and ripple deformation driven by accelerometer/gyroscope, rendered in real time with Metal.
 Author: rom4ikg2000-lab

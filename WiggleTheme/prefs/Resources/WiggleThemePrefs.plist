@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>WiggleTheme</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Жидкие обои (стиль OriginOS 7, экран блокировки)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Enabled</string>
+			<key>label</key>
+			<string>Включено</string>
+			<key>default</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Mode</string>
+			<key>title</key>
+			<string>Режим</string>
+			<key>values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>titles</key>
+			<array>
+				<string>Желе / пружина</string>
+				<string>Водная рябь</string>
+				<string>Оба</string>
+			</array>
+			<key>default</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Физика</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Intensity</string>
+			<key>label</key>
+			<string>Интенсивность</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>default</key>
+			<real>0.6</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Damping</string>
+			<key>label</key>
+			<string>Затухание</string>
+			<key>min</key>
+			<real>0.05</real>
+			<key>max</key>
+			<real>0.6</real>
+			<key>default</key>
+			<real>0.18</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>TiltStrength</string>
+			<key>label</key>
+			<string>Реакция на наклон</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>default</key>
+			<real>0.5</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Маска (PNG с альфа-каналом; непрозрачное = деформировать; пусто = весь экран)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>MaskPath</string>
+			<key>label</key>
+			<string>Путь к маске</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Отладка (логи в Console)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Debug</string>
+			<key>label</key>
+			<string>Подробные логи</string>
+			<key>default</key>
+			<false/>
+		</dict>
+	</array>
+</dict>
+</plist>

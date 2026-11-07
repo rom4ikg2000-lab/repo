@@ -48,17 +48,15 @@ SBFWallpaperView (хук layoutSubviews, только экран блокиро�
 
 ```
 WiggleTheme/
-├── Makefile                  # rootless, arm64, FRAMEWORKS += Metal MetalKit;
+├── Makefile                  # aggregate: tweak + prefs; rootless, arm64;
 │                             # after-stage копирует шейдер в пакет
 ├── control                   # Architecture: iphoneos-arm64
-├── WiggleTheme.plist         # фильтр: только com.apple.springboard
-│                             # (для Theos-твика это аналог Info.plist)
-├── Tweak.xm                  # хуки + датчики + Metal-оркестрация
-├── WallpaperShader.metal     # vertex (wgVert) + fragment (wgFrag)
-├── layout/Library/PreferenceLoader/Preferences/WiggleTheme.plist
-│                             # страница настроек; в rootless-схеме Theos сам
-│                             # добавляет префикс /var/jb ко всем путям
-└── packages/*.deb            # готовый пакет после make package
+├── WiggleTheme.plist → tweak/  # фильтр: только com.apple.springboard
+├── tweak/                    # Tweak.xm, WallpaperShader.metal, фильтр
+├── prefs/                    # preference bundle (страница настроек):
+│                             # RootListController.m + Resources/WiggleThemePrefs.plist
+└── layout/Library/PreferenceLoader/Preferences/WiggleTheme.plist
+                              # entry-плагин (plain-формат PL не читает!)
 ```
 
 ## Сборка (Theos в WSL/Ubuntu)
