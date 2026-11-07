@@ -1,17 +1,12 @@
 // WiggleTheme — «жидкие» обои экрана блокировки в стиле OriginOS 7 (Wiggle Theme).
 //
-// Как это работает:
-//   1. Хук SBFWallpaperView: находим вьюху обоев экрана блокировки.
-//   2. Снимаем её содержимое в UIImage (snapshot) → MTKTextureLoader → MTLTexture.
-//   3. Поверх обоев кладём Metal-вью (CAMetalLayer): шейдер каждый кадр сэмплирует
-//      текстуру обоев по смещённым UV (желе/пружина + водная рябь), маска задаёт,
-//      какие пиксели трогать. Часы/уведомления лежат выше и не затрагиваются.
-//   4. CMMotionManager (акселерометр + гироскоп + attitude): тряска → импульс
-//      (uniforms), наклон → пружина на CPU. Рендер ставится на паузу, когда всё
-//      затухло — батарея не жрётся в покое.
+// 0.3.0:
+//  - Зона эффекта (uniform в шейдер): весь экран / верх / низ / центр +
+//    отступы в %; края зоны мягко размыты. PNG-маска осталась как доп. слой.
+//  - Новые настройки: скорость ряби, скорость желе, сила преломления,
+//    порог тряски — всё применяется на лету.
 //
-// Rootless, iOS 17–18, A12+, только SpringBoard (BackBoard-хуки не нужны:
-// обои композитятся в SpringBoard'е — см. README).
+// Rootless/rootful, iOS 15–18, A12+, только SpringBoard.
 
 #import <UIKit/UIKit.h>
 #import <Metal/Metal.h>
@@ -32,7 +27,7 @@ static id WGValue(NSString *key, id def) {
     return v ? v : def;
 }
 
-static BOOL WGBool(NSString *key, BOOL def)   { return [WGValue(key, @(def)) boolValue]; }
+static BOOL WGBool(NSString *key, BOOL def)      { return [WGValue(key, @(def)) boolValue]; }
 static CGFloat WGNum(NSString *key, CGFloat def) { return [WGValue(key, @(def)) doubleValue]; }
 static NSString *WGStr(NSString *key, NSString *def) { return WGValue(key, def); }
 
@@ -51,6 +46,8 @@ struct WGUniforms {
     vector_float4 impulse; // dirX, dirY, magnitude(0..1), age
     vector_float4 ripple;  // centerX, centerY (uv), age, strength(0..1)
     vector_float4 misc;    // hasMask, omega, (резерв), (резерв)
+    vector_float4 zone;    // зона эффекта в uv: x0, y0, x1, y1
+    vector_float4 fx;      // rippleSpeed, jellySpeed, refraction, zoneEdge
 };
 
 #ifdef WG_ROOTLESS
@@ -91,7 +88,7 @@ static NSString *WGShaderSource(void) {
 - (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         self.opaque = YES;
-        self.userInteractionEnabled = NO; // жесты лок-скрина не трогаем
+        self.userInteractionEnabled = NO;
         CAMetalLayer *l = (CAMetalLayer *)self.layer;
         l.device = MTLCreateSystemDefaultDevice();
         if (!l.device) {
@@ -153,7 +150,7 @@ static NSString *WGShaderSource(void) {
 
     NSError *err = nil;
     MTKTextureLoader *loader = [[MTKTextureLoader alloc] initWithDevice:self.device];
-    NSDictionary *opts = @{ MTKTextureLoaderOptionSRGB : @NO }; // без гамма-конверсий
+    NSDictionary *opts = @{ MTKTextureLoaderOptionSRGB : @NO };
 
     id<MTLTexture> t = [loader newTextureWithCGImage:img.CGImage options:opts error:&err];
     if (!t) {
@@ -177,7 +174,7 @@ static NSString *WGShaderSource(void) {
 
     CAMetalLayer *l = (CAMetalLayer *)self.layer;
     id<CAMetalDrawable> drawable = [l nextDrawable];
-    if (!drawable) return; // пропускаем кадр
+    if (!drawable) return;
 
     memcpy(self.uniformsBuffer.contents, u, sizeof(WGUniforms));
 
@@ -223,10 +220,13 @@ static void *kWGContentsCtx = &kWGContentsCtx;
 @property (nonatomic, assign) double rippleX, rippleY, rippleAge, rippleStrength;
 @property (nonatomic, assign) double lastShakeAt;
 
-// кэш настроек (обновляется не чаще 2 раз в секунду)
+// кэш настроек
 @property (nonatomic, assign) BOOL pEnabled;
 @property (nonatomic, assign) NSInteger pMode;
+@property (nonatomic, assign) NSInteger pZoneMode;
 @property (nonatomic, assign) CGFloat pIntensity, pDamping, pTilt;
+@property (nonatomic, assign) CGFloat pInsetTop, pInsetBottom, pInsetLeft, pInsetRight;
+@property (nonatomic, assign) CGFloat pRippleSpeed, pJellySpeed, pRefraction, pSensitivity;
 @property (nonatomic, copy) NSString *pMaskPath;
 @property (nonatomic, assign) NSTimeInterval prefsStamp;
 @end
@@ -247,12 +247,41 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     if (self.prefsStamp != 0 && now - self.prefsStamp < 0.5) return;
     self.prefsStamp = now;
 
-    self.pEnabled   = WGBool(@"Enabled", YES);
-    self.pMode      = [WGValue(@"Mode", @2) integerValue];
-    self.pIntensity = WGNum(@"Intensity", 0.6);
-    self.pDamping   = WGNum(@"Damping", 0.18);
-    self.pTilt      = WGNum(@"TiltStrength", 0.5);
-    self.pMaskPath  = WGStr(@"MaskPath", @"");
+    self.pEnabled     = WGBool(@"Enabled", YES);
+    self.pMode        = [WGValue(@"Mode", @2) integerValue];
+    self.pZoneMode    = [WGValue(@"ZoneMode", @0) integerValue];
+    self.pIntensity   = WGNum(@"Intensity", 0.6);
+    self.pDamping     = WGNum(@"Damping", 0.18);
+    self.pTilt        = WGNum(@"TiltStrength", 0.5);
+    self.pInsetTop    = WGNum(@"InsetTop", 0.0);
+    self.pInsetBottom = WGNum(@"InsetBottom", 0.0);
+    self.pInsetLeft   = WGNum(@"InsetLeft", 0.0);
+    self.pInsetRight  = WGNum(@"InsetRight", 0.0);
+    self.pRippleSpeed = WGNum(@"RippleSpeed", 0.85);
+    self.pJellySpeed  = WGNum(@"JellySpeed", 1.0);
+    self.pRefraction  = WGNum(@"Refraction", 0.6);
+    self.pSensitivity = WGNum(@"Sensitivity", 0.85);
+    self.pMaskPath    = WGStr(@"MaskPath", @"");
+}
+
+// зона эффекта в uv-координатах (y=0 — низ экрана, y=1 — верх)
+- (vector_float4)zoneUV {
+    float x0 = 0.0f, y0 = 0.0f, x1 = 1.0f, y1 = 1.0f;
+    switch (self.pZoneMode) {
+        case 1: y0 = 0.5f; break; // верхняя половина
+        case 2: y1 = 0.5f; break; // нижняя половина
+        case 3: x0 = y0 = 0.2f; x1 = y1 = 0.8f; break; // центральная область
+        default: break;
+    }
+    x0 += (float)MIN(MAX(self.pInsetLeft, 0), 45) / 100.0f;
+    x1 -= (float)MIN(MAX(self.pInsetRight, 0), 45) / 100.0f;
+    y0 += (float)MIN(MAX(self.pInsetBottom, 0), 45) / 100.0f;
+    y1 -= (float)MIN(MAX(self.pInsetTop, 0), 45) / 100.0f;
+    x0 = MIN(MAX(x0, 0.0f), x1 - 0.1f);
+    y0 = MIN(MAX(y0, 0.0f), y1 - 0.1f);
+    x1 = MAX(x1, x0 + 0.1f);
+    y1 = MAX(y1, y0 + 0.1f);
+    return (vector_float4){ x0, y0, x1, y1 };
 }
 
 #pragma mark Установка над обоями
@@ -268,7 +297,7 @@ static void *kWGContentsCtx = &kWGContentsCtx;
 
     if (!self.metalView) {
         WGMetalView *mv = [[WGMetalView alloc] initWithFrame:wallpaper.bounds];
-        if (!mv.device) return; // Metal недоступен — молча не работаем
+        if (!mv.device) return;
 
         self.metalView = mv;
         self.link = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
@@ -284,7 +313,6 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     self.metalView.frame = wallpaper.bounds;
     self.metalView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    // смена обоев → новый снапшот
     [self addContentsObserver];
 
     self.needsSnapshot = YES;
@@ -420,8 +448,8 @@ static void *kWGContentsCtx = &kWGContentsCtx;
 #pragma mark Датчики (фоновый поток) → главный поток
 
 - (void)motionTick:(CMDeviceMotion *)m {
-    double rateX = m.rotationRate.x; // тангаж
-    double rateZ = m.rotationRate.z; // рыскание в портрете
+    double rateX = m.rotationRate.x;
+    double rateZ = m.rotationRate.z;
     double roll = m.attitude.roll;
     double pitch = m.attitude.pitch;
     CMAcceleration a = m.userAcceleration; // без гравитации, в g
@@ -434,13 +462,11 @@ static void *kWGContentsCtx = &kWGContentsCtx;
         self.velX += rateZ * 0.006;
         self.velY += rateX * 0.006;
 
-        // цели пружины из attitude (±60° крена, ±90° тангажа → -1..1)
         self.tiltTargetX = WGClamp(roll / (M_PI / 3.0), -1.0, 1.0) * self.pTilt;
         self.tiltTargetY = WGClamp(pitch / (M_PI / 2.0), -1.0, 1.0) * self.pTilt * 0.5;
 
-        // тряска → импульс
         double now = CACurrentMediaTime();
-        if (mag > 0.85 && now - self.lastShakeAt > 0.7) {
+        if (mag > self.pSensitivity && now - self.lastShakeAt > 0.7) {
             self.lastShakeAt = now;
 
             double dx = a.x, dy = -a.y; // в экранные координаты (UIKit, y вниз)
@@ -526,6 +552,9 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     u.ripple  = (vector_float4){ (float)self.rippleX, (float)self.rippleY,
                                  (float)self.rippleAge, (float)self.rippleStrength };
     u.misc    = (vector_float4){ mv.maskTexture ? 1.0f : 0.0f, 16.0f, 0.0f, 0.0f };
+    u.zone    = [self zoneUV];
+    u.fx      = (vector_float4){ (float)self.pRippleSpeed, (float)self.pJellySpeed,
+                                 (float)self.pRefraction, 0.08f };
 
     [mv drawFrame:&u];
 
@@ -579,6 +608,6 @@ static void WGLockStateChanged(CFNotificationCenterRef center, void *observer,
                                         NULL, WGLockStateChanged,
                                         CFSTR("com.apple.springboard.lockstate"),
                                         NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
-        NSLog(@"[WiggleTheme] loaded (iOS 17-18, rootless, Metal)");
+        NSLog(@"[WiggleTheme] loaded (v0.3.0)");
     }
 }

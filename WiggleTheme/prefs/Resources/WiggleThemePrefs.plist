@@ -10,7 +10,9 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Жидкие обои (стиль OriginOS 7, экран блокировки)</string>
+			<string>WiggleTheme — жидкие обои (стиль OriginOS 7)</string>
+			<key>footerText</key>
+			<string>Заблокируй экран, встряхни или наклони телефон — обои колышутся как желе и идут рябью. Все настройки применяются на лету.</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -23,6 +25,13 @@
 			<string>Включено</string>
 			<key>default</key>
 			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Эффект</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -47,12 +56,6 @@
 			</array>
 			<key>default</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Физика</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -81,12 +84,213 @@
 			<string>Damping</string>
 			<key>label</key>
 			<string>Затухание</string>
+			<key>footerText</key>
+			<string>Меньше — колебания длятся дольше (более «желейно»), больше — обои быстрее успокаиваются.</string>
 			<key>min</key>
 			<real>0.05</real>
 			<key>max</key>
 			<real>0.6</real>
 			<key>default</key>
 			<real>0.18</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Refraction</string>
+			<key>label</key>
+			<string>Преломление</string>
+			<key>footerText</key>
+			<string>Сила хроматической дисперсии при рябь — эффект «стеклянной воды».</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>1</real>
+			<key>default</key>
+			<real>0.6</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Скорости</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>RippleSpeed</string>
+			<key>label</key>
+			<string>Скорость ряби</string>
+			<key>min</key>
+			<real>0.3</real>
+			<key>max</key>
+			<real>2</real>
+			<key>default</key>
+			<real>0.85</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>JellySpeed</string>
+			<key>label</key>
+			<string>Скорость желе</string>
+			<key>footerText</key>
+			<string>Частота колебаний желе: меньше — ленивое и вязкое, больше — дрожит часто.</string>
+			<key>min</key>
+			<real>0.5</real>
+			<key>max</key>
+			<real>2</real>
+			<key>default</key>
+			<real>1</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Зона эффекта</string>
+			<key>footerText</key>
+			<string>Эффект действует только внутри выбранной зоны, её края мягко размыты. Отступы — подгонка зоны от краёв экрана в процентах, работают в любом режиме.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>ZoneMode</string>
+			<key>title</key>
+			<string>Зона</string>
+			<key>values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+			</array>
+			<key>titles</key>
+			<array>
+				<string>Весь экран</string>
+				<string>Верхняя половина</string>
+				<string>Нижняя половина</string>
+				<string>Центральная область</string>
+			</array>
+			<key>default</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>InsetTop</string>
+			<key>label</key>
+			<string>Отступ сверху, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>InsetBottom</string>
+			<key>label</key>
+			<string>Отступ снизу, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>InsetLeft</string>
+			<key>label</key>
+			<string>Отступ слева, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>InsetRight</string>
+			<key>label</key>
+			<string>Отступ справа, %</string>
+			<key>min</key>
+			<real>0</real>
+			<key>max</key>
+			<real>45</real>
+			<key>default</key>
+			<real>0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Тряска и наклон</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>Sensitivity</string>
+			<key>label</key>
+			<string>Порог тряски, g</string>
+			<key>footerText</key>
+			<string>Насколько сильно нужно встряхнуть. Меньше — реагирует даже на лёгкое покачивание.</string>
+			<key>min</key>
+			<real>0.5</real>
+			<key>max</key>
+			<real>2.5</real>
+			<key>default</key>
+			<real>0.85</real>
 			<key>showValue</key>
 			<true/>
 		</dict>
@@ -108,11 +312,12 @@
 			<key>showValue</key>
 			<true/>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Маска (PNG с альфа-каналом; непрозрачное = деформировать; пусто = весь экран)</string>
+			<string>Маска (необязательно)</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -122,13 +327,16 @@
 			<key>key</key>
 			<string>MaskPath</string>
 			<key>label</key>
-			<string>Путь к маске</string>
+			<string>Путь к PNG</string>
+			<key>footerText</key>
+			<string>PNG с альфа-каналом — дополнительный слой поверх зоны: непрозрачное = деформируется. Пусто = только зона.</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Отладка (логи в Console)</string>
+			<string>Отладка</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -139,6 +347,8 @@
 			<string>Debug</string>
 			<key>label</key>
 			<string>Подробные логи</string>
+			<key>footerText</key>
+			<string>WiggleTheme 0.3.0 · rom4ikg2000-lab</string>
 			<key>default</key>
 			<false/>
 		</dict>

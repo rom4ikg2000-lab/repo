@@ -1,16 +1,16 @@
-// WallpaperShader.metal — WiggleTheme
+// WallpaperShader.metal — WiggleTheme 0.3.0
 // Деформация текстуры обоев экрана блокировки в стиле OriginOS 7.
 //
 // Два режима (комбинируются):
-//   Желе/пружина — затухающая синусоида, амплитуда = последний импульс
-//   акселерометра, направление = вектор импульса; поверх — «пружинный»
-//   сдвиг от наклона телефона (интегрируется на CPU).
-//   Водная рябь — радиальный волновой фронт, расширяющийся от точки
-//   импульса, с затуханием по времени и расстоянию + преломление
-//   (лёгкая хроматическая дисперсия).
+//   Желе/пружина — затухающая синусоида от импульса акселерометра
+//   + «пружинный» сдвиг от наклона телефона (интегрируется на CPU).
+//   Водная рябь — радиальный волновой фронт от точки импульса,
+//   с затуханием по времени/расстоянию и преломлением (хроматическая дисперсия).
 //
-// Компилируется на устройстве: MTLLibrary из этого исходника
-// (путь: /var/jb/Library/Application Support/WiggleTheme/WallpaperShader.metal).
+// 0.3.0: зона эффекта (uniform zone, мягкие края) + скорости и сила
+// преломления вынесены в uniforms (настройки применяются на лету).
+//
+// Компилируется на устройстве: MTLLibrary из этого исходника.
 
 #include <metal_stdlib>
 using namespace metal;
@@ -22,6 +22,8 @@ struct WGUniforms {
     float4 impulse; // dirX, dirY, magnitude(0..1), age
     float4 ripple;  // centerX, centerY (uv), age, strength(0..1)
     float4 misc;    // hasMask, omega, (резерв), (резерв)
+    float4 zone;    // зона эффекта в uv: x0, y0, x1, y1
+    float4 fx;      // rippleSpeed, jellySpeed, refraction, zoneEdge
 };
 
 struct WGVertOut {
@@ -29,12 +31,9 @@ struct WGVertOut {
     float2 uv;
 };
 
-// Полноэкранный треугольный веер из 4 вершин (vertex_id 0..3).
 vertex WGVertOut wgVert(uint vid [[vertex_id]]) {
     float2 p[4] = { float2(-1.0, -1.0), float2(1.0, -1.0),
                     float2(-1.0,  1.0), float2(1.0,  1.0) };
-    // uv (0,0) — левый НИЗ, совпадает с ориентацией текстуры,
-    // загруженной MTKTextureLoader'ом по умолчанию (GL-конвенция).
     float2 t[4] = { float2(0.0, 0.0), float2(1.0, 0.0),
                     float2(0.0, 1.0), float2(1.0, 1.0) };
     WGVertOut o;
@@ -52,7 +51,7 @@ fragment float4 wgFrag(WGVertOut             in      [[stage_in]],
                           address::clamp_to_edge);
     float2 uv = in.uv;
 
-    // --- альфа-маска: где деформировать, а где оставить как есть ---
+    // --- опциональная PNG-маска поверх зоны ---
     float maskA = 1.0;
     if (u.misc.x > 0.5) {
         maskA = maskTex.sample(smp, uv).a;
@@ -61,22 +60,16 @@ fragment float4 wgFrag(WGVertOut             in      [[stage_in]],
     float2 disp = float2(0.0);
 
     // --- ЖЕЛЕ / ПРУЖИНА ---
-    // Затухающая синусоида: амплитуда ~ импульс акселерометра,
-    // направление ~ вектор импульса, фаза бежит и по времени, и по
-    // проекции uv на направление импульса (получается дрожание-желе,
-    // а не плоский сдвиг).
     if (u.paramsB.w < 0.5 || u.paramsB.w > 1.5) {
-        float t   = u.impulse.w;
+        float t    = u.impulse.w;
         float2 dir = u.impulse.xy; // уже нормализован на CPU
         float decay = exp(-u.paramsB.x * t * 2.5);
         float proj  = dot(uv - float2(0.5), dir);
-        float wave  = sin(proj * 22.0 - t * u.misc.y);
+        float wave  = sin(proj * 22.0 - t * u.misc.y * max(u.fx.y, 0.1));
         float amp   = u.impulse.z * u.paramsA.w * decay * wave;
         disp += dir * amp * 0.07;
-    }
 
-    // --- НАКЛОН (пружина, интегрируется на CPU) ---
-    if (u.paramsB.w < 0.5 || u.paramsB.w > 1.5) {
+        // наклон: пружинный сдвиг с CPU
         disp += float2(u.paramsB.y, u.paramsB.z) * 0.05;
     }
 
@@ -84,13 +77,11 @@ fragment float4 wgFrag(WGVertOut             in      [[stage_in]],
     if (u.paramsB.w > 0.5) {
         float t = u.ripple.z;
         if (t < 3.5 && u.ripple.w > 0.001) {
-            // круговой фронт в пиксельном соотношении экрана
             float aspect = u.paramsA.x / max(u.paramsA.y, 1.0);
             float2 d    = (uv - u.ripple.xy) * float2(aspect, 1.0);
             float dist  = length(d) + 1e-5;
             float2 radial = d / dist;
-            float front = dist - t * 0.85;                 // скорость фронта
-            // гауссов пакет вокруг фронта + затухание по времени и расстоянию
+            float front = dist - t * 0.85 * max(u.fx.x, 0.1);
             float env = exp(-front * front / 0.0045)
                       * exp(-t * 1.8)
                       * exp(-dist * 1.1);
@@ -99,15 +90,26 @@ fragment float4 wgFrag(WGVertOut             in      [[stage_in]],
         }
     }
 
-    // --- гасим деформацию у краёв, чтобы текстура не тянулась за пределы ---
+    // --- гасим у краёв экрана ---
     float2 edge = smoothstep(float2(0.0), float2(0.07), uv)
                 * smoothstep(float2(0.0), float2(0.07), 1.0 - uv);
-    disp *= edge * maskA;
+    disp *= edge;
 
-    // --- преломление: лёгкая хроматическая дисперсия по смещённым UV ---
-    float2 uvr = uv + disp * 0.90;
+    // --- ЗОНА ЭФФЕКТА (мягкие края) ---
+    float2 zmin = u.zone.xy;
+    float2 zmax = u.zone.zw;
+    float zedge = max(u.fx.w, 0.005);
+    float2 zin  = smoothstep(zmin - zedge, zmin + zedge, uv);
+    float2 zout = 1.0 - smoothstep(zmax - zedge, zmax + zedge, uv);
+    disp *= zin.x * zin.y * zout.x * zout.y;
+
+    disp *= maskA;
+
+    // --- преломление: хроматическая дисперсия, сила = u.fx.z ---
+    float refr = clamp(u.fx.z, 0.0, 1.0);
+    float2 uvr = uv + disp * (1.0 - 0.10 * refr);
     float2 uvg = uv + disp;
-    float2 uvb = uv + disp * 1.10;
+    float2 uvb = uv + disp * (1.0 + 0.10 * refr);
     float4 col;
     col.r = wallTex.sample(smp, uvr).r;
     col.g = wallTex.sample(smp, uvg).g;
