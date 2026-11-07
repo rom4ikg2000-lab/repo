@@ -1,29 +1,48 @@
 # rom4ikg2000-lab Tweaks
 
-Мой репозиторий с твиками для iOS. Есть пакеты для rootless и rootful jailbreak.
+Личный репозиторий с jailbreak твиками для iOS. В репозитории собраны пакеты для rootless и rootful джейлбрейка.
 
 ## Добавить репозиторий
 
-```
+```text
 https://rom4ikg2000-lab.github.io/repo/
 ```
 
-В Sileo открой Sources → Edit → + и вставь ссылку. В Zebra: Sources → +.
+Для Sileo: Sources → Edit → +, вставьте ссылку.
+Для Zebra: Sources → +.
 
-## Твики
+## Доступные твики
 
-- **WiggleTheme** — обои для экрана блокировки с эффектом желе и водной рябью. Реагируют на движение телефона. iOS 15–18, A12+.
-
-Твик собран для rootless (`iphoneos-arm64`) и rootful (`iphoneos-arm`).
+- WiggleTheme — "жидкие" обои для экрана блокировки с эффектом желе и ряби. Эффект реагирует на движение устройства, наклон и встряску.
+- Поддерживаются архитектуры: `iphoneos-arm64` (rootless) и `iphoneos-arm` (rootful).
 
 ## Сборка
 
-Нужны Linux или WSL, Theos и инструменты для сборки Debian-пакетов. По умолчанию скрипт ищет Theos в `~/theos`; другой путь можно указать через переменную `THEOS`.
+Для сборки нужен Linux/WSL, Theos и инструменты для сборки Debian-пакетов. По умолчанию скрипт ищет Theos в `~/theos`.
 
 ```bash
 bash build-all.sh
 ```
 
-Скрипт собирает WiggleTheme для rootless и rootful, сохраняет пакеты в `debs/` и обновляет метаданные в `dists/`.
+Скрипт собирает пакеты, сохраняет их в папку `debs/` и обновляет метаданные репозитория в `dists/`.
 
-GitHub Actions пересобирает пакеты при изменениях в исходниках твиков или `build-all.sh`. Репозиторий доступен через GitHub Pages.
+## Автоматическая сборка
+
+GitHub Actions автоматически пересобирает пакеты при изменениях в исходниках твиков или в `build-all.sh`.
+
+## Разработка
+
+```bash
+cd WiggleTheme
+make package FINALPACKAGE=1
+```
+
+Для rootful сборки:
+
+```bash
+make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootful
+```
+
+## Примечание
+
+Репозиторий поддерживает установку через стандартные менеджеры пакетов, совместимые с Debian-репозиториями.
