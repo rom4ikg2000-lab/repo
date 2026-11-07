@@ -167,7 +167,27 @@
 			<key>label</key>
 			<string>Зона эффекта</string>
 			<key>footerText</key>
-			<string>Эффект действует только внутри выбранной зоны, её края мягко размыты. Отступы — подгонка зоны от краёв экрана в процентах, работают в любом режиме.</string>
+			<string>Эффект действует только внутри зоны, края мягко размыты. Отступы — подгонка от краёв экрана в процентах. Нарисуешь маску кистью и включишь её — она заменит зону-слайдеры.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>label</key>
+			<string>Нарисовать маску кистью</string>
+			<key>detail</key>
+			<string>WGMaskEditorController</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>defaults</key>
+			<string>com.wiggletheme.defaults</string>
+			<key>key</key>
+			<string>PaintedMaskEnabled</string>
+			<key>label</key>
+			<string>Использовать нарисованную маску</string>
+			<key>default</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>cell</key>

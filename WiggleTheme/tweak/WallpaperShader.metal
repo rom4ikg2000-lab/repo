@@ -95,13 +95,15 @@ fragment float4 wgFrag(WGVertOut             in      [[stage_in]],
                 * smoothstep(float2(0.0), float2(0.07), 1.0 - uv);
     disp *= edge;
 
-    // --- ЗОНА ЭФФЕКТА (мягкие края) ---
-    float2 zmin = u.zone.xy;
-    float2 zmax = u.zone.zw;
-    float zedge = max(u.fx.w, 0.005);
-    float2 zin  = smoothstep(zmin - zedge, zmin + zedge, uv);
-    float2 zout = 1.0 - smoothstep(zmax - zedge, zmax + zedge, uv);
-    disp *= zin.x * zin.y * zout.x * zout.y;
+    // --- ЗОНА ЭФФЕКТА (мягкие края; отключается, когда активна нарисованная маска) ---
+    if (u.misc.z > 0.5) {
+        float2 zmin = u.zone.xy;
+        float2 zmax = u.zone.zw;
+        float zedge = max(u.fx.w, 0.005);
+        float2 zin  = smoothstep(zmin - zedge, zmin + zedge, uv);
+        float2 zout = 1.0 - smoothstep(zmax - zedge, zmax + zedge, uv);
+        disp *= zin.x * zin.y * zout.x * zout.y;
+    }
 
     disp *= maskA;
 

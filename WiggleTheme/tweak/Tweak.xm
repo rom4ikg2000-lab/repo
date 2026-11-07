@@ -64,6 +64,14 @@ static NSString *WGShaderSource(void) {
     return src;
 }
 
+// маска, нарисованная кистью в настройках (общая для Settings и SpringBoard)
+static NSString *WGPaintedMaskPath(void) {
+    NSString *base = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *dir = [base stringByAppendingPathComponent:@"WiggleTheme"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
+    return [dir stringByAppendingPathComponent:@"painted-mask.png"];
+}
+
 #pragma mark - Metal-вью (слой над обоями)
 
 @interface WGMetalView : UIView
@@ -227,6 +235,8 @@ static void *kWGContentsCtx = &kWGContentsCtx;
 @property (nonatomic, assign) CGFloat pIntensity, pDamping, pTilt;
 @property (nonatomic, assign) CGFloat pInsetTop, pInsetBottom, pInsetLeft, pInsetRight;
 @property (nonatomic, assign) CGFloat pRippleSpeed, pJellySpeed, pRefraction, pSensitivity;
+@property (nonatomic, assign) BOOL pPaintedEnabled;
+@property (nonatomic, assign) BOOL maskIsPainted;
 @property (nonatomic, copy) NSString *pMaskPath;
 @property (nonatomic, assign) NSTimeInterval prefsStamp;
 @end
@@ -261,6 +271,7 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     self.pJellySpeed  = WGNum(@"JellySpeed", 1.0);
     self.pRefraction  = WGNum(@"Refraction", 0.6);
     self.pSensitivity = WGNum(@"Sensitivity", 0.85);
+    self.pPaintedEnabled = WGBool(@"PaintedMaskEnabled", NO);
     self.pMaskPath    = WGStr(@"MaskPath", @"");
 }
 
@@ -380,7 +391,13 @@ static void *kWGContentsCtx = &kWGContentsCtx;
     }
 
     UIImage *mask = nil;
-    if (self.pMaskPath.length > 0) {
+    self.maskIsPainted = NO;
+    if (self.pPaintedEnabled) {
+        mask = [UIImage imageWithContentsOfFile:WGPaintedMaskPath()];
+        self.maskIsPainted = (mask != nil);
+        if (!mask) WGLog(@"painted mask missing — falling back to zone");
+    }
+    if (!mask && self.pMaskPath.length > 0) {
         mask = [UIImage imageWithContentsOfFile:self.pMaskPath];
         if (!mask) WGLog(@"mask PNG not found: %@", self.pMaskPath);
     }
@@ -551,7 +568,8 @@ static void *kWGContentsCtx = &kWGContentsCtx;
                                  (float)self.impulseMag, (float)self.impulseAge };
     u.ripple  = (vector_float4){ (float)self.rippleX, (float)self.rippleY,
                                  (float)self.rippleAge, (float)self.rippleStrength };
-    u.misc    = (vector_float4){ mv.maskTexture ? 1.0f : 0.0f, 16.0f, 0.0f, 0.0f };
+    u.misc    = (vector_float4){ mv.maskTexture ? 1.0f : 0.0f, 16.0f,
+                                 self.maskIsPainted ? 0.0f : 1.0f, 0.0f };
     u.zone    = [self zoneUV];
     u.fx      = (vector_float4){ (float)self.pRippleSpeed, (float)self.pJellySpeed,
                                  (float)self.pRefraction, 0.08f };
