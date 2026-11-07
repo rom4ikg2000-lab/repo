@@ -6,28 +6,28 @@ Version: 1.0
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: Personal tweak repository (rootless + rootful)
-Date: Sat, 07 Nov 2026 06:40:11 +0000
+Date: Sat, 07 Nov 2026 06:57:08 +0000
 
 MD5Sum:
- 32e3d2d8246b3d5a249c1842459b88c9 6092 dists/stable/main/binary-iphoneos-arm/Packages
- 88ae6551392e8e80f40dce5ab78cb040 1705 dists/stable/main/binary-iphoneos-arm/Packages.bz2
- 856a71cb67edbe0d2274b9ea6bd791ec 1511 dists/stable/main/binary-iphoneos-arm/Packages.gz
- 32e3d2d8246b3d5a249c1842459b88c9 6092 dists/stable/main/binary-iphoneos-arm64/Packages
- 88ae6551392e8e80f40dce5ab78cb040 1705 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
- 856a71cb67edbe0d2274b9ea6bd791ec 1511 dists/stable/main/binary-iphoneos-arm64/Packages.gz
+ bfee87ca2768d1c6d7367437711f7ddb 7308 dists/stable/main/binary-iphoneos-arm/Packages
+ 109d3cf240480736a498636a8bc3a548 1894 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 09090cd20514e7bbdebcc3005f9747bb 1715 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ bfee87ca2768d1c6d7367437711f7ddb 7308 dists/stable/main/binary-iphoneos-arm64/Packages
+ 109d3cf240480736a498636a8bc3a548 1894 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 09090cd20514e7bbdebcc3005f9747bb 1715 dists/stable/main/binary-iphoneos-arm64/Packages.gz
 
 SHA1:
- ec7fec25cc455fd7d365b5a7200591c54944808e 6092 dists/stable/main/binary-iphoneos-arm/Packages
- 7aae4cac813eb43ff2c6fbc3cc7d532677b1b5fa 1705 dists/stable/main/binary-iphoneos-arm/Packages.bz2
- 4b2445afdce2e971be6799ce5f66f3d14861d0c6 1511 dists/stable/main/binary-iphoneos-arm/Packages.gz
- ec7fec25cc455fd7d365b5a7200591c54944808e 6092 dists/stable/main/binary-iphoneos-arm64/Packages
- 7aae4cac813eb43ff2c6fbc3cc7d532677b1b5fa 1705 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
- 4b2445afdce2e971be6799ce5f66f3d14861d0c6 1511 dists/stable/main/binary-iphoneos-arm64/Packages.gz
+ 5a4a94ed300e0bd22fce94432ec48123012c9d85 7308 dists/stable/main/binary-iphoneos-arm/Packages
+ ad22ca4b5317b6220c746a022b372261e9435261 1894 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 91704336c202debc0c42744b0ba32946d3bb091b 1715 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ 5a4a94ed300e0bd22fce94432ec48123012c9d85 7308 dists/stable/main/binary-iphoneos-arm64/Packages
+ ad22ca4b5317b6220c746a022b372261e9435261 1894 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 91704336c202debc0c42744b0ba32946d3bb091b 1715 dists/stable/main/binary-iphoneos-arm64/Packages.gz
 
 SHA256:
- 820c46192eb0859f75ab3aedf2b6417fa662f8aa78f0e6b5f068befbf761d427 6092 dists/stable/main/binary-iphoneos-arm/Packages
- e09fbae7761c4ad05b13e6bee12153b12a04c67bfa7c1e7739c4092a918a6421 1705 dists/stable/main/binary-iphoneos-arm/Packages.bz2
- 1e256e910947ab55b52b3d67cf7d0e02f1bddada873bd4e23ff76cf0b3d34f15 1511 dists/stable/main/binary-iphoneos-arm/Packages.gz
- 820c46192eb0859f75ab3aedf2b6417fa662f8aa78f0e6b5f068befbf761d427 6092 dists/stable/main/binary-iphoneos-arm64/Packages
- e09fbae7761c4ad05b13e6bee12153b12a04c67bfa7c1e7739c4092a918a6421 1705 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
- 1e256e910947ab55b52b3d67cf7d0e02f1bddada873bd4e23ff76cf0b3d34f15 1511 dists/stable/main/binary-iphoneos-arm64/Packages.gz
+ 2e719b744218c8348d290df1c1d050c7cf5352bdd26031a02baea0e2642dfe18 7308 dists/stable/main/binary-iphoneos-arm/Packages
+ 53f485beaf1a9ce5519ff66d3bd9c5e6f3e18d28a6806126ce76a14a1ee97170 1894 dists/stable/main/binary-iphoneos-arm/Packages.bz2
+ 7b0efd93fc31dd6ef10aab4ccdf3fb97c0118b36a5a7029a870c79b98cd957a6 1715 dists/stable/main/binary-iphoneos-arm/Packages.gz
+ 2e719b744218c8348d290df1c1d050c7cf5352bdd26031a02baea0e2642dfe18 7308 dists/stable/main/binary-iphoneos-arm64/Packages
+ 53f485beaf1a9ce5519ff66d3bd9c5e6f3e18d28a6806126ce76a14a1ee97170 1894 dists/stable/main/binary-iphoneos-arm64/Packages.bz2
+ 7b0efd93fc31dd6ef10aab4ccdf3fb97c0118b36a5a7029a870c79b98cd957a6 1715 dists/stable/main/binary-iphoneos-arm64/Packages.gz
