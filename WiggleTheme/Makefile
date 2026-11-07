@@ -1,4 +1,4 @@
-TARGET := iphone:clang:latest:16.0
+TARGET := iphone:clang:latest:15.0
 # ?= позволяет переопределить с консоли: make THEOS_PACKAGE_SCHEME=rootful
 THEOS_PACKAGE_SCHEME ?= rootless
 ARCHS = arm64

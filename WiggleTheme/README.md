@@ -65,7 +65,7 @@ WiggleTheme/
 
 > **Важно:** команды выполняются в терминале **WSL (Ubuntu)**, не в PowerShell — `/mnt/c/...` существует только внутри WSL.
 > Окружение в этой машине уже настроено: Theos в `~/theos`, SDK 16.5, ldid, тулчейн clang.
-> Deployment target — 16.0: в theos/sdks нет SDK 17, но 17-only API твик не использует и на iOS 17/18 работает нормально.
+> Deployment target — 15.0 (совместим с iPhone X / iOS 15): в theos/sdks нет SDK 17, но 17-only API твик не использует и на iOS 17/18 работает нормально.
 
 ```bash
 # зависимости и Theos — как в ../OriginDroplet/README.md (если ещё не стоит)
